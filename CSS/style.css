@@ -1,0 +1,4 @@
+ .receipt-paper {
+      background: repeating-linear-gradient(#fff, #fff 24px, #fbfbfb 24px, #fbfbfb 25px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }

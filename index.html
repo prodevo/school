@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Практикум: Касовий термінал (Цикли в JS)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body class="bg-slate-100 text-slate-800 min-h-screen py-8 px-4 font-sans">
+  <div class="max-w-6xl mx-auto space-y-6">
+    
+    
+    <header class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+      <div>
+        <h1 class="text-2xl font-black text-slate-900 flex items-center gap-3">
+          <i class="fa-solid fa-cash-register text-emerald-600"></i>
+          Практикум: Консольний термінал касира
+        </h1>
+        <p class="text-slate-500 text-sm mt-1">
+          Інтерактивне відпрацювання циклів JS: <code class="bg-slate-100 px-1.5 py-0.5 rounded text-emerald-700 font-semibold">for</code>, 
+          <code class="bg-slate-100 px-1.5 py-0.5 rounded text-amber-700 font-semibold">while (бонуси)</code>, 
+          <code class="bg-slate-100 px-1.5 py-0.5 rounded text-blue-700 font-semibold">do...while</code> та 
+          <code class="bg-slate-100 px-1.5 py-0.5 rounded text-purple-700 font-semibold">while (решта)</code>.
+        </p>
+      </div>
+      <button onclick="resetAll()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-semibold transition">
+        <i class="fa-solid fa-rotate-right mr-1"></i> Скинути термінал
+      </button>
+    </header>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      
+     
+      <div class="lg:col-span-2 space-y-6">
+        
+        
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-bold rounded-full uppercase">Крок 1 &bull; Цикл for</span>
+            <span class="text-xs text-slate-400">Ігнорування 0 грн (continue) + ПДВ 20%</span>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 mb-2">Підрахунок вартості кошика товарів</h2>
+          <p class="text-xs text-slate-500 mb-3">Ціни товарів у чеку (грн):</p>
+          
+          <div id="cartChips" class="flex flex-wrap gap-2 mb-4">
+            
+          </div>
+
+          <button onclick="calculateCart()" class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm">
+            <i class="fa-solid fa-calculator"></i> Запустити розрахунок кошика (for)
+          </button>
+        </div>
+
+        
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-amber-50 text-amber-700 text-xs font-bold rounded-full uppercase">Крок 2 &bull; Цикл while (без масивів)</span>
+            <span class="text-xs text-slate-400">Списання по 50 балів, макс. 50% чека</span>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 mb-2">Програма лояльності: Списання бонусів</h2>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Баланс карти покупця (балів):</label>
+              <input type="number" id="bonusBalanceInput" value="310" class="w-full px-3 py-2 border rounded-xl text-sm font-semibold focus:outline-emerald-500">
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Крок списання (пакет):</label>
+              <input type="number" id="bonusStepInput" value="50" disabled class="w-full px-3 py-2 bg-slate-50 border rounded-xl text-sm font-semibold text-slate-500">
+            </div>
+          </div>
+
+          <button id="btnApplyBonuses" onclick="applyBonuses()" disabled class="w-full py-2.5 bg-amber-600 hover:bg-amber-700 disabled:bg-slate-200 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm">
+            <i class="fa-solid fa-gift"></i> Списати бонуси через цикл while
+          </button>
+
+          
+          <div id="bonusStepsContainer" class="mt-4 hidden p-3 bg-amber-50/60 rounded-xl border border-amber-200 text-xs text-amber-900 space-y-1">
+          </div>
+        </div>
+
+        
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-blue-50 text-blue-700 text-xs font-bold rounded-full uppercase">Крок 3 &bull; Цикл do...while</span>
+            <span class="text-xs text-slate-400">Валідація суми оплати</span>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 mb-2">Оплата готівкою на касі</h2>
+          
+          <div class="flex gap-3 mb-3">
+            <div class="relative flex-1">
+              <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 text-sm font-bold">₴</span>
+              <input type="number" id="cashInput" placeholder="Введіть суму готівки" class="w-full pl-8 pr-4 py-2 border rounded-xl text-sm font-semibold focus:outline-blue-500">
+            </div>
+            <button id="btnValidateCash" onclick="validateCashInput()" disabled class="px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-200 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition text-sm">
+              Перевірити (do...while)
+            </button>
+          </div>
+          <p id="validationMsg" class="text-xs text-slate-500"></p>
+        </div>
+
+        
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+          <div class="flex items-center justify-between mb-4">
+            <span class="px-3 py-1 bg-purple-50 text-purple-700 text-xs font-bold rounded-full uppercase">Крок 4 &bull; Цикл while</span>
+            <span class="text-xs text-slate-400">Видача купюрами: 500, 200, 100...</span>
+          </div>
+          <h2 class="text-lg font-bold text-slate-900 mb-2">Видача решти покупцю</h2>
+
+          <button id="btnCalculateChange" onclick="calculateChange()" disabled class="w-full py-2.5 bg-purple-600 hover:bg-purple-700 disabled:bg-slate-200 disabled:cursor-not-allowed text-white font-semibold rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm mb-4">
+            <i class="fa-solid fa-money-bill-wave"></i> Розрахувати решту купюрами
+          </button>
+
+          <div id="banknotesResult" class="grid grid-cols-3 sm:grid-cols-5 gap-2">
+            
+          </div>
+        </div>
+
+      </div>
+
+      
+      <div class="space-y-6">
+        
+        
+        <div class="receipt-paper border border-slate-300 rounded-xl p-5 font-mono text-xs text-slate-700">
+          <div class="text-center pb-3 border-b border-dashed border-slate-300 mb-3">
+            <p class="font-bold text-sm tracking-wider uppercase">Супермаркет "JS Loops"</p>
+            <p class="text-[10px] text-slate-400">Фіскальний касовий чек</p>
+          </div>
+
+          <div class="space-y-1.5 mb-3" id="receiptItems">
+            <p class="text-slate-400 italic">Натисніть "Розрахувати кошик"...</p>
+          </div>
+
+          <div class="pt-3 border-t border-dashed border-slate-300 space-y-1 text-xs">
+            <div class="flex justify-between">
+              <span>Сума без знижки:</span>
+              <span id="receiptRawTotal" class="font-bold">0.00 грн</span>
+            </div>
+            <div class="flex justify-between text-amber-700 font-bold">
+              <span>Бонусна знижка:</span>
+              <span id="receiptDiscount">-0.00 грн</span>
+            </div>
+            <div class="flex justify-between text-sm font-black pt-1 border-t border-slate-200">
+              <span>ДО СПЛАТИ:</span>
+              <span id="receiptToPay" class="text-emerald-700">0.00 грн</span>
+            </div>
+            <div class="flex justify-between text-slate-500 pt-1">
+              <span>Отримано готівкою:</span>
+              <span id="receiptCash">0.00 грн</span>
+            </div>
+            <div class="flex justify-between text-purple-700 font-bold">
+              <span>РЕШТА:</span>
+              <span id="receiptChange">0.00 грн</span>
+            </div>
+          </div>
+        </div>
+
+        
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script src="JS/script.js"></script>
+</body>
+</html>
